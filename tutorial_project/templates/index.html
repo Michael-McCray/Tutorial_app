@@ -1,15 +1,16 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block body_block %}
 
-<!DOCTYPE html>
-<html>
+<h1>Tutorials718</h1>
+<br />
+		
+		{% if user.is_authenticated %}
+		<h1>Hello {{ user.username}}!</h1>
+		{% else %}
+		<h1>Hello World!</h1>
+		{% endif %}
 
-	<head>
-		<title>tutorial app</title>
-	</head>
-	
-	<body>
-		<h1>Tutorials718</h1>
-		Hear is knowledge<!-- <strong>{{ boldmessage }}</strong> --><br />
 		{% if categories %}
 			<ul>
 				{% for category in categories %}
@@ -27,8 +28,4 @@
 					<a href="{{ pages.url }}">{{ page.title }}</a>
 				{% endfor %}
 			{% endif %}
-		<a href="/about/">About</a><br />
-		<img src="{% static 'images/punisher-1-maleev-variant-1.jpg' %}" alt="Picture of Uf0970" /> <!-- New Line -->
-	</body>
-
-</html>
+		{% endblock %}

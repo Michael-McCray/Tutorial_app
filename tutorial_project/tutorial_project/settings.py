@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tutorial_app',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,6 +63,8 @@ TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 TEMPLATE_DIRS = (
     TEMPLATE_PATH,
     )
+
+LOGIN_URL = '/login/'
 
 DATABASES = {
     'default': {

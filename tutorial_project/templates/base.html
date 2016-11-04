@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>{% block title %}Tutorial App {% endblock %} </title>
+	</head>
+	
+	<body>
+		<div>
+			<ul>
+		
+				{% if user.is_authenticated %}
+					<li><a href="/logout/">Logout</a></li>
+					<li><a href="/add_category/">Add A New Category</a></li>
+				{% else %}
+					<li><a href="/register/">Register Here</a></li>
+					<li><a href="/login/">Login</a></li>
+				{% endif %}
+				
+					<li><a href="/about/">About</a></li>
+			</ul>
+		</div>
+
+
+		<div>
+			{% block body_block %} {% endblock %} <!-- dynamic content here -->
+		</div>
+		
+
+</html>
