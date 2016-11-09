@@ -14,7 +14,7 @@
 		{% if categories %}
 			<ul>
 				{% for category in categories %}
-				<li><a href="/category/{{ category.slug }}"></a>{{ category.name }}</li>
+				<li><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
 				{% endfor %}
 			</ul>
 			{% else %}
@@ -25,7 +25,10 @@
 			{% if pages %}
 				<h1>Top 5 pages</h1>
 				{% for page in pages %}
-					<a href="{{ pages.url }}">{{ page.title }}</a>
+					<a href="{{ page.url }}">{{ page.title }}</a>
 				{% endfor %}
 			{% endif %}
+
+			<p>{{visits}}<p/> 
+		
 		{% endblock %}
