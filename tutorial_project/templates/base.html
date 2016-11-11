@@ -1,32 +1,70 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 	<head>
-		<title>{% block title %}Tutorial App {% endblock %} </title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="veiwport" content="width=device-width, initial_scale1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta rel="icon" href="http://getbootstrap.com/favicon.ico">
+		<title>Tutorial App {% block title %} Read Up {% endblock %} </title>
+		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/signing.css' %}">
 	</head>
+
 	
 	<body>
-		<div>
-			<ul>
 		
-				{% if user.is_authenticated %}
-					<li><a href="/logout/">Logout</a></li>
-					<li><a href="/add_category/">Add A New Category</a></li>
-				{% else %}
-					<li><a href="/register/">Register Here</a></li>
-					<li><a href="/login/">Login</a></li>
-				{% endif %}
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	  		<div class="container-fluid">
+		    	<!-- Brand and toggle get grouped for better mobile display -->
+		    	<div class="navbar-header">
+			      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+			      	</button>
+		      		<a class="navbar-brand" href="#">Tutorials 212</a>
+    			</div>
+    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      				<ul class="nav navbar-nav navbar-right">
+      					<li><a href="{% url 'index' %}">Home</a></li>
+	      					{% if user.is_authenticated %}
+								<li><a href="{% url 'logout' %}">Logout</a></li>
+								<li><a href="{% url 'add_category' %}">Add A New Category</a></li>
+							{% else %}
+								<li><a href="{% url 'register' %}">Register Here</a></li>
+								<li><a href="{% url 'login' %}">Login</a></li>
+							{% endif %}
+								<li><a href="{% url 'about' %}">About</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-2 sidebar">
+					{% block side_block %} {% endblock %} <!-- dynamic content here -->
+				</div>
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<div>
+						{% block body_block %} {% endblock %} <!-- dynamic content here -->
+					</div>
+				</div>
 				
-					<li><a href="/about/">About</a></li>
-			</ul>
-		</div>
-
-
-		<div>
-			{% block body_block %} {% endblock %} <!-- dynamic content here -->
+			</div>
 		</div>
 		
+		<script src="ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+		<script src="http://getbootstrap.com/assets/js/ie10-veiwport-bug-workaround.js"></script>
+	</body>
 
 </html>

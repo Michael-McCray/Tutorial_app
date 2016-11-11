@@ -1,34 +1,57 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
+
+{% block title %}Tutorials 212{% endblock %}
+
 {% block body_block %}
 
-<h1>Tutorials718</h1>
-<br />
-		
-		{% if user.is_authenticated %}
-		<h1>Hello {{ user.username}}!</h1>
+{% if user.is_authenticated %}
+	<div class="page-header">
+			
+			<h1>Tutorials {{ user.username}}!</h1>
 		{% else %}
-		<h1>Hello World!</h1>
+			<h1>Tutorials 212</h1>
 		{% endif %}
+	</div>
 
-		{% if categories %}
-			<ul>
-				{% for category in categories %}
-				<li><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
-				{% endfor %}
-			</ul>
+	<div class="row placeholders">
+		<div class="col-xs-12 col-sm-6 placeholder">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Categories</h3>
+				</div>
+			</div>
+	
+			{% if categories %}
+					<ul class="list-group">
+						{% for category in categories %}
+						<li class="list-group-item"><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<strong>There are no categories present.</strong>
+				{% endif %}
+		</div>
+		<div class="col-xs-12 col-sm-6 placeholder">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Pages</h3>
+				</div>
+			</div>
+			{% if pages %}
+				<ul class="list-group">
+					{% for page in pages %}
+					<li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+					{% endfor %}
+				</ul>
 			{% else %}
 				<strong>There are no categories present.</strong>
 			{% endif %}
+		</div>
+	</div>
 
-<!--add page display -->
-			{% if pages %}
-				<h1>Top 5 pages</h1>
-				{% for page in pages %}
-					<a href="{{ page.url }}">{{ page.title }}</a>
-				{% endfor %}
-			{% endif %}
-
-			<p>{{visits}}<p/> 
-		
-		{% endblock %}
+		<p>{{visits}}<p/> 
+	
+{% endblock %}
