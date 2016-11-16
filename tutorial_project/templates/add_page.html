@@ -2,6 +2,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body_block %}
+{% load extras %}
 {% if category %}
 	<form role="form" id="page_form" method="post" action="/category/{{category.slug}}/add_page/">
 		<h2 class="form-signin-heading">Add a Page<a href="/category/{{category.slug}}/">{{category.name}}</a></h2>
@@ -13,19 +14,20 @@
 		{% endfor %}
 
 		{% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}<br/>
-            {{ field }}<br/>
+        <div class="form-group">
+			{{ field.errors }}
+			{{ field.label }}
+			{{ field.help_text }}</br>
+			{{ field | addcls 'form-control' }}</br>
+		</div>
 		{% endfor %}
+		
 		<br/>
-		
-		<button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Add Page</button>
-	</form>
-	{% else %}
-		
+		<button class="btn btn-lg btn-primary k" type="submit" value="submit">Add Page</button>
+			</form>
+		{% else %}
 		<p>this category does not exist</p>
-
-{% endif %}
+	{% endif %}
 
 		
-{% endblock %}
+	{% endblock %}

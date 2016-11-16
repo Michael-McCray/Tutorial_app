@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body_block %}
+{% load extras %}
+
 	<h1 class="form-signin-heading">Add a Category</h1>
 
 	<form role="form" id="category_form" method="post" action="/add_category/">
@@ -10,12 +12,16 @@
 		{% for hidden in form.hidden_fields %}
 			{{ hidden }}
 		{% endfor %}
+		
 		{% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }}
+        <div class="form-group">
+				{{ field.errors }}
+				{{ field.label }}
+				{{ field.help_text }}</br>
+				{{ field | addcls 'form-control' }}</br>
+		</div>
 		{% endfor %}
 
-		<input type="submit" name="submit" value="/Add Category/" />
+<button class="btn btn-primary" type="submit" name="submit">Add a Category</button>
 	</form>
 {% endblock %}

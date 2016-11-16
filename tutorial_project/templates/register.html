@@ -2,9 +2,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body_block %}
+{% load extras %}
 
 		
-		<h1>Regester with Tutorial App</h1>
+		<h1>Register with Tutorial App</h1>
 		
 		{% if regesterd %}
 			<strong>Thank you for registering</strong>
@@ -18,12 +19,25 @@
 				
 			{% csrf_token %}
 
-	        {{ user_form.as_p }}
-	        {{ profile_form.as_p }}
 
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Register</button>
-			
+			{% for field in user_form.visible_fields %}
+			<div class="form-group">
+				{{ field.errors }}
+				{{ field.label }}
+				{{ field.help_text }}</br>
+				{{ field|addcls:"form-control"}}</br>
+			</div>
+			{% endfor %}
+			{% for field in profile_form.visible_fields %}
+			<div class="form-group">
+				{{ field.label }}
+				{{ field.errors }}
+				{{ field.help_text }}</br>
+				{{ field|addcls:"form-control" }}</br>
+			</div>
+			{% endfor %}
+			<!-- provide a button to click to submit the form -->
+			<input type="submit" name="submit" value="Register">			
 		</form>
 		{% endif %}
 {% endblock %}
