@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load extras %}
+{% block title %}Contact Us{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+	<h1 class="form-signin-heading">Contact US</h1>
+	<form class="form-signin" id="page_form" method='post' action='/contact/'>
+		<h3 class="form-signin-heading">Contact</h3>
+		{% csrf_token %}
+
+		{% for hidden in form.hidden_fields %}
+			{{ hidden }}
+		{% endfor %}
+
+		{% for field in form.visible_fields %}
+		<div class="form-group">
+			{{ field.errors }}
+			{{ field.help_text }}
+			{{field.label}}
+			{{ field|addcls:'form-control' }}
+		</div>
+		{% endfor %}
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Contact Us</button>
+	</form>
+{% endblock %}

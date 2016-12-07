@@ -1,7 +1,8 @@
 import json
+import os
 import urllib, urllib2
 
-BING_API_KEY='0att1pJ6p6sVtJiBoA4/XqGzarTG0832GDN2NLT0rPE'
+BING_API_KEY = os.environ.get('BING_API_KEY')
 
 def run_query(search_terms):
     # Specify the base

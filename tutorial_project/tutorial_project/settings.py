@@ -22,6 +22,12 @@ SECRET_KEY = 'me7dr^xiubc@i7w5ngvk+!!22pcbtoxv7qb%0(c@_4un6rwc=!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '<macoovae@gmail.com>'
+EMAIL_HOST_PASSWORD = os.environ.get('oleruhnhiuiuhsmu')
+
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -37,6 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tutorial_app',
+    'django_extensions',
+    'werkzeug',
     
 )
 

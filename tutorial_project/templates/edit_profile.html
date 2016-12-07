@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load extras %}
+{% block title %}Edit Profile{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+		<h1 class="form-signin-heading">Edit Profile</h1>
+		<form class="form-signin" id='profile_form' method="post" action='/user/{{ profile.user}}/edit/' enctype='multipart/form-data'>
+			<h3 class="form-signin-heading">Edit your profile.</h3>
+			{% csrf_token %}
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+
+			{% for field in form.visible_fields %}
+			<div class='form-group'>
+				{{field.errors}}
+				{{field.help_text}}
+				{{field.label}}
+				{{ field|addcls:'form-control' }}
+			</div>
+			{% endfor %}
+			<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Edit Profile</button>
+		</form>
+{% endblock %}

@@ -14,7 +14,7 @@
 		<title>Tutorial App {% block title %} Read Up {% endblock %} </title>
 		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/signing.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/signin.css' %}">
 	</head>
 
 	
@@ -32,17 +32,17 @@
 			      	</button>
 		      		<a class="navbar-brand" href="#">Tutorials 212</a>
     			</div>
-    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      				<ul class="nav navbar-nav navbar-right">
-      					<li><a href="{% url 'index' %}">Home</a></li>
-	      					{% if user.is_authenticated %}
-								<li><a href="{% url 'logout' %}">Logout</a></li>
-								<li><a href="{% url 'add_category' %}">Add A New Category</a></li>
-							{% else %}
-								<li><a href="{% url 'register' %}">Register Here</a></li>
-								<li><a href="{% url 'login' %}">Login</a></li>
-							{% endif %}
-								<li><a href="{% url 'about' %}">About</a></li>
+    			<div class="navbar-collapse collpase">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'about' %}">About Us</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'add-category' %}">Add Category</a></li>
+						<li><a href="{% url 'profile' user.username %}">{{user.username}}'s Profile'</a></li>
+						<li><a href="{% url 'logout' %}">Logout</a></li>
+						{% else %}
+						<li><a href="{% url 'login' %}">Login</a></li>
+						<li><a href="{% url 'register' %}">Register</a></li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -52,9 +52,16 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3 col-md-2 sidebar">
-					{% block side_block %} 
-						{% get_category_list category %} 
-					{% endblock %} <!-- dynamic content here -->
+					<ul class="nav nav-list">
+						<li class="nav-header"> Find a Category</li>
+						<form>
+							<label></label>
+							<li><input class="search-query span10" type="text" name="suggestion" value="" id="suggestion"></li>
+						</form>
+					</ul>
+					<div id="cats">
+						
+					</div>
 				</div>
 				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<div>
@@ -65,9 +72,10 @@
 			</div>
 		</div>
 		
-		<script src="ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 		<script src="http://getbootstrap.com/assets/js/ie10-veiwport-bug-workaround.js"></script>
+		<script type="text/javascript" src="{% static 'js/app_ajax.js' %}"></script>
 	</body>
 
 </html>

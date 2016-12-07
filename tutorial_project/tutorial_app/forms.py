@@ -2,10 +2,11 @@ from django import forms
 from models import Page, Category
 from django.contrib.auth.models import User
 from models import Category, Page, UserProfile #add user profile
+from django.core.mail import EmailMessage
 
  
 class CategoryForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter a category       name.")
+    name = forms.CharField(max_length=128, help_text="Please enter a category name.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -13,6 +14,37 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ('name', )
+        exclude = ('user',)
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=True)
+    email = forms.CharField(widget=forms.EmailInput(), required=True)
+    subject = forms.CharField(required=True)
+    body = forms.CharField(widget=forms.Textarea(), required=True)
+
+    def send_message(self):
+        name = self.cleaned_data['name']
+        email = self.cleaned_data['email']
+        subject = self.cleaned_data['subject']
+        body = self.cleaned_data['body']
+
+        message = '''
+                New Message from {name} @ {email}
+                Subject: {subject}
+                Message:
+                {body}
+                '''.format(name=name,
+                        email=email,
+                        subject=subject,
+                        body=body)
+        
+
+        email_msg = EmailMessage('New Contact Form Submission ',
+                    message,
+                    email,
+                    ['info@theknowledgehouse.org'])
+
+        email_msg.send()
 
 class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the title of the page.")
@@ -32,7 +64,7 @@ class PageForm(forms.ModelForm):
 
     class Meta:
         model = Page
-        exclude = ('category',)
+        exclude = ('category', 'user')
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -44,4 +76,5 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('website', 'picture')
+        fields = ('website', 'picture', 'bio')
+        
