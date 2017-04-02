@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
-{% block title %}About{% endblock %}
+{% block title %}About Us{% endblock %}
 
 {% block body_block %}
+<div class="page-header">
+	<h1>About Tutorials App</h1>
+</div>
+<p>Visits: {{ visits }}</p>
 
-	<div class="page-header">
-		<h1>About</h1>
-	</div>
-	<div>
-		<p>{{visits}} visits to the site</p>
+<p>This app allows users to save and categorize free online tutorials</p>
 
-		<img width="90" height="100" src="{% static 'images/img.jpg' %}" alt="">
-	</div>
 {% endblock %}

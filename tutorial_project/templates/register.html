@@ -1,43 +1,42 @@
-
 {% extends 'base.html' %}
 {% load static %}
-{% block body_block %}
 {% load extras %}
+{% block title %}Register{% endblock %}
 
-		
-		<h1>Register with Tutorial App</h1>
-		
-		{% if regesterd %}
-			<strong>Thank you for registering</strong>
-			<a href="/">Return to the homepage</a><br />
-		{% else %}
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
 
-			<strong>Register Here!</strong><br />
+	<h1 class="form-signin-heading">Register with the Tutorial App</h1>
 
-		<form class="form-signin" id="user_form" method="post" action="/register/"
-			enctype='multipart/form-data'>
-				
-			{% csrf_token %}
+	{% if registered %}
+	<strong>Thanks for registering!</strong>
+	<a href="{% url 'index' %}">Return Home</a>
+	{% else %}
+	<strong class="form-signin-heading"><h2>Register Here</h2></strong>
 
+	<form class="form-signin" id='user_form' method='post' action='/register/' enctype='multipart/form-data'>
+		<strong class="form-signin-heading">Please Register</strong>
+		{% csrf_token %}
 
-			{% for field in user_form.visible_fields %}
-			<div class="form-group">
-				{{ field.errors }}
-				{{ field.label }}
-				{{ field.help_text }}</br>
-				{{ field|addcls:"form-control"}}</br>
-			</div>
-			{% endfor %}
-			{% for field in profile_form.visible_fields %}
-			<div class="form-group">
-				{{ field.label }}
-				{{ field.errors }}
-				{{ field.help_text }}</br>
-				{{ field|addcls:"form-control" }}</br>
-			</div>
-			{% endfor %}
-			<!-- provide a button to click to submit the form -->
-			<input type="submit" name="submit" value="Register">			
-		</form>
-		{% endif %}
+		{% for field in user_form.visible_fields %}
+		<div class='form-group'>
+			{{field.errors}}<br>
+			{{field.help_text}}<br>
+			{{field.label}}
+			{{field |addcls:'form-control' }}
+		</div>
+		{% endfor %}
+
+		{% for field in profile_form.visible_fields %}
+		<div class='form-group'>
+			{{field.errors}}<br>
+			{{field.help_text}}<br>
+			{{field.label}}
+			{{field|addcls:'form-control'}}<br>
+		</div>
+		{% endfor %}
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Register</button>
+	</form>
+	{% endif %}
 {% endblock %}

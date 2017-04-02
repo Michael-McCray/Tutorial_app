@@ -323,4 +323,3 @@ def edit_profile(request, user_username):
     return render(request, 
                 'edit_profile.html', 
                 {'form':form, 'profile': profile})
-

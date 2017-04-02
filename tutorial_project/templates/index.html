@@ -1,63 +1,63 @@
+
 {% extends 'base.html' %}
-
 {% load static %}
-
-
-{% block title %}Tutorials 212{% endblock %}
 
 {% block body_block %}
 
-{% if user.is_authenticated %}
-	<div class="page-header">
-			
-			<h1>Tutorials {{ user.username}}!</h1>
-		{% else %}
-			<h1>Tutorials 212</h1>
+<div class="page-header">
+	{% if user.is_authenticated %}
+	<h1>Welcome to Tutorial App {{ user.username }}</h1>
+	{% else %}
+	<h1>Tutorials</h1>
+	{% endif %}
+</div>
+
+<div class="row placeholders">
+	<div class="col-xs-12 col-md-6 placeholder">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Categories</h3>
+			</div>
+		</div>
+	{% if categories %}
+		<ul class="list-group">
+		{% for category in categories %}
+			<li class="list-group-item"><a href="{% url 'category' category.slug %}"><p>{{ category.name }}</p></a></li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<strong>There are no categories!</strong>
+	{% endif %}
+	</div>
+	<div class="col-xs-12 col-md-6 placeholder">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Pages</h3>
+			</div>
+		</div>
+
+
+	{% if pages %}
+
+		<ul class="list-group">
+		{% for page in pages %}
+		<li class="list-group-item"><a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }}</a>
+		{% if page.views > 1 %}
+			{{ page.views }} views
+		{% elif page.views == 1 %}
+			{{ page.views }} view
 		{% endif %}
-	</div>
+		</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<strong>There are no pages</strong>
+	{% endif %}	
+</div>
+</div>
 
-	<div class="row placeholders">
-		<div class="col-xs-12 col-sm-6 placeholder">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Categories</h3>
-				</div>
-			</div>
-	
-			{% if categories %}
-					<ul class="list-group">
-						{% for category in categories %}
-						<li class="list-group-item"><a href="{% url 'category'  category.slug %}">{{ category.name }}</a></li>
-						{% endfor %}
-					</ul>
-				{% else %}
-					<strong>There are no categories present.</strong>
-				{% endif %}
-		</div>
-		<div class="col-xs-12 col-sm-6 placeholder">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Pages</h3>
-				</div>
-			</div>
-			{% if pages %}
-				<ul class="list-group">
-					{% for page in pages %}
-					<li class="list-group-item"><a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }}</a>
-					{% if page.views > 1 %}
-						({{ page.views }} views)
-					{% elif page.views == 1 %}
-						({{ page.views }} view)
-					{% endif %}
-					</li>
-					{% endfor %}
-				</ul>
-			{% else %}
-				<strong>There are no categories present.</strong>
-			{% endif %}
-		</div>
-	</div>
 
-		<p>{{visits}}<p/> 
-	
+
+	<!--<img src="{% static 'images/photo.jpeg' %}">-->
+
 {% endblock %}

@@ -17,16 +17,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'me7dr^xiubc@i7w5ngvk+!!22pcbtoxv7qb%0(c@_4un6rwc=!'
+SECRET_KEY = '1=rs=r8inq7&nnrlj(a#k&a(xir6e+wgnbj5hzk7#jd_jx8_c='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = '<macoovae@gmail.com>'
-EMAIL_HOST_PASSWORD = os.environ.get('oleruhnhiuiuhsmu')
 
 TEMPLATE_DEBUG = True
 
@@ -43,9 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tutorial_app',
-    'django_extensions',
-    'werkzeug',
-    
+    'braces',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,13 +51,16 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    )
+
 ROOT_URLCONF = 'tutorial_project.urls'
 
 WSGI_APPLICATION = 'tutorial_project.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 
@@ -72,7 +68,18 @@ TEMPLATE_DIRS = (
     TEMPLATE_PATH,
     )
 
-LOGIN_URL = '/login/'
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+# Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -94,20 +101,38 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+LOGIN_URL = '/login/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_PATH = os.path.join(BASE_DIR,'static')
 
-STATIC_URL = '/static/'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'macoovae@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)
+AWS_STORAGE_BUCKET_NAME = 'tutorial-app27'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
- #Media
+STATICFILES_LOCATION = 'static'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
-MEDIA_URL = '/media/'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+
+AWS_HEADERS = {  
+        'Access-Control-Allow-Origin' : '*'
+    }
+
+
+
+

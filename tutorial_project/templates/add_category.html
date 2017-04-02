@@ -1,26 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_block %}
 {% load extras %}
+{% block title %}Add Category{% endblock %}
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+		<h1 class="form-signin-heading">Add Category</h1>
+		<form class="form-signin" id='category_form' method="post" action='/add-category/'>
+			<h3 class="form-signin-heading">Add a new category.</h3>
+			{% csrf_token %}
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
 
-	<h1 class="form-signin-heading">Add a Category</h1>
-
-	<form role="form" id="category_form" method="post" action="/add_category/">
-		
-		{% csrf_token %}
-		{% for hidden in form.hidden_fields %}
-			{{ hidden }}
-		{% endfor %}
-		
-		{% for field in form.visible_fields %}
-		<div class="form-group">
-			{{ field.errors }}
-			{{ field.help_text }}
-			{{field.label}}
-			{{ field|addcls:'form-control' }}
-		</div>
-		{% endfor %}
-
-<button class="btn btn-primary" type="submit" name="submit">Add a Category</button>
-	</form>
+			{% for field in form.visible_fields %}
+			<div class='form-group'>
+				{{field.errors}}
+				{{field.help_text}}
+				{{field.label}}
+				{{ field|addcls:'form-control' }}
+			</div>
+			{% endfor %}
+			<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Add Category</button>
+		</form>
 {% endblock %}
+
+
+
+

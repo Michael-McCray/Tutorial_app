@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body_block %}
-		
-	<h2 class="form-signin-heading">Login</h2>
-	<form class="form-signin" id="login_form" method="post" action="/login/">
-		<h2 class="form-signin-heading">Please sigh in</h2>
-		{% csrf_token %}
-			<input class="form-control" placeholder="Username" type="text" name="username" value="" size="50" required autofocus="" ="">
-			<input class="form-control" placeholder="Password" type="password" name="password" value="" size="50" required="" />
-			<br />
-			<button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign in</button>
-	</form>
 
+{% block title %}Login{% endblock %}
+
+{% block body_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+
+	<h2 class="form-signin-heading">Login To Tutorial App</h2>
+
+	<form class="form-signin" id="login_form" method='post' action='/login/'>
+		<h2 class="form-signin-heading">Please Login</h2>
+		{% csrf_token %}
+
+		<input class="form-control" placeholder="Username" type='text' name='username' value="" size="50" required autofocus>
+
+		<input class="form-control" placeholder="Password" type='password' name='password' value="" size="50" required>
+		<br/>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit">Sign In</button>
+	</form>
+	<a href="{% url 'recover-password' %}">Forget your password? Click here.</a>
 {% endblock %}

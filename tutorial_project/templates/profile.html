@@ -18,6 +18,7 @@
 		{% endif %}
 		{% if profile.user == user %}
 		<a href="{% url 'edit_profile' profile.user.username %}">Edit Your Profile</a>
+		<a href="{% url 'settings' %}">Change Password</a>
 		{% endif %}
 	</div>
 </div>
